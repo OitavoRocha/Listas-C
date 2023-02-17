@@ -27,11 +27,11 @@ int main() {
 }
 
 void converteData(data d1) {
-    char mes[10];
+    char mes[10]; //POR QUE O STRCPY NAO ESTA ESCREVENDO CORRETAMENTE DENTRO DA VARIAVEL QUANDO EU CRIO ELA COMO "char *mes;" ?
 
+    //EH POSSIVEL TRANSFORMAR UMA ENUMARATION EM UMA STRING?
     switch (d1.mes) {
         case 1:
-            //POR QUE O STRCPY NAO ESTA ESCREVENDO CORRETAMENTE DENTRO DA VARIAVEL QUANDO EU CRIO ELA COMO "char *mes;" ?
             strcpy(mes, "Janeiro");
             break;
         case 2:
