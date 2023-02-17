@@ -28,6 +28,7 @@ int main() {
     getchar();
 
     for( i=0 ; i<NUMERO_ALUNOS ; i++ ) {
+        //POR QUE TA DANDO ERRO COM O USO DO TOKEN? COMO USAR CORRETAMENTE O COMANDO STRTOK
         token = strtok(alunos[i], " ");
         flag = strcmp(busca, token);
         if ( flag == 0 ) 
