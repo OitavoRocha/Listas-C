@@ -1,0 +1,4 @@
+Pelotas                      3000
+Rio Grande                   2700
+Porto Alegre                 5000
+Capao do Leao                2300
