@@ -86,7 +86,13 @@ int main() {
     } else {
         printf("A distancia entre ambas as cidades eh de %.2f\n", distanciaEntreDuas);
     }
-
+    
+    free(c);
+    for( int i=0 ; i<n ; i++ ) {
+        free(dist[i]);
+    }
+    free(dist);
+    
     return 0;
 }
 
