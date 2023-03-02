@@ -1,3 +1,4 @@
+// PROGRAMA QUE TESTA SE UM NUMERO INTEIRO EH PALINDROMO
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
