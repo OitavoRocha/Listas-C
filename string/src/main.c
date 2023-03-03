@@ -1,3 +1,4 @@
+// TA DANDO ERRO DE SEGMENTAÇÃO NA FUNÇÃO DE REMOVER
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
