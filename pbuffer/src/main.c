@@ -7,6 +7,7 @@ Faça uma agenda capaz de incluir, apagar, buscar e listar quantas pessoas o usu
 
 /*
 PROBLEMAS:
+    segmentation fault na linha 66, no printf
     nao mantem os dados conforme adiciono pessoas, mantendo soh o primeiro e o ultimo
     nao procura por nome pessoas apos a segunda
 */
@@ -14,8 +15,8 @@ PROBLEMAS:
 #include <stdlib.h>
 #include <string.h>
 
-#define TAMANHO_NOME 10
-#define TAMANHO_REGISTRO (int)(sizeof(char)*TAMANHO_NOME)+sizeof(int)+sizeof(int)
+#define TAMANHO_NOME ( int ) sizeof( char ) * 10
+#define TAMANHO_REGISTRO ( int ) ( TAMANHO_NOME ) + sizeof( int ) + sizeof( int )
 
 int menu();
 
@@ -38,7 +39,7 @@ int main() {
             getchar();
             printf("Informe os dados da pessoa %d:\n", *(int*)pBuffer + 1);
             printf("-Nome: ");
-            scanf("%[^\n]s", nome);
+            scanf("%9s", nome);
             printf("-Idade: ");
             scanf("%d", &idade);
             printf("-Telefone: ");
@@ -60,12 +61,12 @@ int main() {
             //apaga(&pBuffer);
             break;
         case 3: // IMPRIME OS DADOS DE TODAS AS PESSOAS
-            for( int i=0 ; i<*(int *)pBuffer ; i++ ) {
+            for( int i = 0 ; i < *( int * )pBuffer ; i++ ) {
                 printf("+---Dado da Pessoa %d---+\n", i+1);
                 if ( i == 0 ) {
-                    printf("Nome: %s\nIdade: %d\nTelefone: %d\n", (char*)(pBuffer+sizeof(int)), *(int*)(pBuffer+sizeof(int)+TAMANHO_NOME), *(int*)(pBuffer+(2*sizeof(int))+TAMANHO_NOME));
+                    printf("Nome: %s\nIdade: %d\nTelefone: %d\n", ( char * )( pBuffer + sizeof( int ) ), *( int * )( (int)pBuffer + 1 + TAMANHO_NOME ), *( int * )( ( int ) pBuffer + 2 + TAMANHO_NOME ));
                 } else {
-                    printf("Nome: %s\nIdade: %d\nTelefone: %d\n", (char*)(pBuffer+sizeof(int)+(i*TAMANHO_REGISTRO)), *(int*)(pBuffer+sizeof(int)+(i*TAMANHO_REGISTRO)+TAMANHO_NOME), *(int*)(pBuffer+(2*sizeof(int))+(int)(i*TAMANHO_REGISTRO)+TAMANHO_NOME));
+                    printf("Nome: %s\nIdade: %d\nTelefone: %d\n", ( char * )( pBuffer + sizeof( int ) + ( i * TAMANHO_REGISTRO )), *( int * )(( int )pBuffer + 1 + ( i * TAMANHO_REGISTRO ) + TAMANHO_NOME ), *( int * )(( int ) pBuffer + 1 + ( i * TAMANHO_REGISTRO ) + TAMANHO_NOME ));
                 }
             }
             break;
@@ -73,7 +74,7 @@ int main() {
             getchar();
             count = 0;
             printf("Informe a pessoa que voce quer buscar: ");
-            scanf("%[^\n]s", nome);
+            scanf("%9s", nome);
             for( int i=0 ; i<*(int *)pBuffer ; i++ ) {
                 if( strcmp(nome, (char*)(pBuffer+sizeof(int)+i*(TAMANHO_REGISTRO)))==0 ) {
                     printf("+---Dados de %s---+\n", nome);
