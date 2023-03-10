@@ -3,11 +3,11 @@ Faça uma agenda capaz de incluir, apagar, buscar e listar quantas pessoas o usu
 • Não pergunte para o usuário quantas pessoas ele vai incluir. Não pode alocar espaço para mais pessoas do que o necessário.
 • Cada pessoa tem nome[10], idade e telefone.
 • O trabalho que vale nota será uma continuação deste.
-
-
 ERRO!
     depois de muito tempo testando, tive um erro de segmentation na linha 159
-    dois nomes especificos nao estavam sendo encontrados na string, nao sei pq
+
+TO DO
+    tem q implementar a função apagar, já fiz o esqueleto dela, acredito que a melhor opção seja utilizar ponteiro pra ponteiro
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,6 +23,7 @@ typedef int bool;
 
 int menu();
 void adiciona( void * ini );
+//void apaga( void ** pBuffer, int * tamanho );
 void imprimeContato( void * ini );
 void lista( void * ini, int * tam );
 void buscaPorPosicao( void * ini, int * tam );
@@ -32,7 +33,6 @@ bool empty( int * tam );
 int main() {
     void *pBuffer;
     void *ini;
-    void *pointer;
     int *tamanho;
 
     pBuffer = malloc( INTEGER_SIZE + 1 );
@@ -47,24 +47,34 @@ int main() {
             pBuffer = realloc( pBuffer, SIZE * ( *tamanho ) + INTEGER_SIZE );
             tamanho = ( int * ) pBuffer;
             ini = ( pBuffer + INTEGER_SIZE );
-            pointer = ( ini +  SIZE * ( ( * tamanho ) - 1 ) );
             printf( "Informe os dados da pessoa %d:\n", *tamanho );
-            adiciona( pointer );
+            adiciona( ( ini +  SIZE * ( ( * tamanho ) - 1 ) ) );
             break;
         case 2:
-            lista( ini, tamanho );
+            //apaga( &pBuffer, tamanho );
             break;
         case 3:
-            buscaPorPosicao( ini, tamanho );
+            lista( ini, tamanho );
             break;
         case 4:
-            buscaNome( ini, tamanho);
+            buscaPorPosicao( ini, tamanho );
             break;
         case 5:
+            buscaNome( ini, tamanho);
+            break;
+        case 6:
+            /*
+            printf( "Tamanho: %d\n" , *( int * )pBuffer );
+            for ( int i = 0 ; i < * tamanho ; i++ ) {
+                pBuffer = pBuffer + INTEGER_SIZE;
+                printf( " %s\n" ,  ( char * )pBuffer );
+                pBuffer = pBuffer + NAME_SIZE;
+                printf( " %d\n" ,  *( int * )pBuffer );
+                pBuffer = pBuffer + INTEGER_SIZE;
+                printf( " %d\n" ,  *( int * )pBuffer );
+            }
+            */
             free( pBuffer );
-            free( tamanho );
-            free( ini );
-            free( pointer );
             exit(1);
         }
     }
@@ -77,10 +87,11 @@ int menu() {
 
     printf( "Informe uma opcao\n" );
     printf( " 1.Adicionar pessoa\n" );
-    printf( " 2.Listar\n" );
-    printf( " 3.Busca por Posicao\n" );
-    printf( " 4.Busca por Nome\n" );
-    printf( " 5.Sair\n" );
+    printf( " 2.Apaga Contato\n" );
+    printf( " 3.Listar\n" );
+    printf( " 4.Busca por Posicao\n" );
+    printf( " 5.Busca por Nome\n" );
+    printf( " 6.Sair\n" );
     scanf( "%d", &c );
 
     return c;
@@ -99,7 +110,12 @@ void adiciona( void * ini ) {
     scanf( "%d", ( int * ) ini );
 
 }
+/*
+void apaga( void ** pBuffer, int * tamanho ) {
 
+
+}
+*/
 void imprimeContato( void * ini) {
 
     printf( " Nome: %s\n", ( char * ) ini );
@@ -145,7 +161,6 @@ void buscaPorPosicao( void * ini, int * tam ) {
 
 void buscaNome( void * ini, int * tam ) {
     char nome[10];
-    int flag = 0;
 
     if ( !empty( tam ) ) {
         printf( "Agenda vazia\n" );
@@ -156,16 +171,14 @@ void buscaNome( void * ini, int * tam ) {
     printf( "Informe o nome a ser procurado: " );
     scanf( "%9[^\n]s", nome );
     
-    for ( int i = 0 ; i < * tam ; i++ , ini = ini + ( i * SIZE ) ) {
+    for ( int i = 0 ; i < * tam ; i++ , ini = ini + SIZE ) {
         if ( strcmp( ( char * )ini, nome ) == 0 ) {
             imprimeContato( ini );
-            flag++;
+            return;
         }
     }
 
-    if ( flag == 0 ) {
-        printf( "Nome nao encontrado!\n" );
-    }
+    printf( "Nome nao encontrado!\n" );
 
 }
 
