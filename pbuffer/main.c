@@ -64,6 +64,7 @@ int main() {
             break;
         case 6:
             /*
+            FOI S
             printf( "Tamanho: %d\n" , *( int * )pBuffer );
             for ( int i = 0 ; i < * tamanho ; i++ ) {
                 pBuffer = pBuffer + INTEGER_SIZE;
