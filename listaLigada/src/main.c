@@ -21,6 +21,7 @@ Node* newNode( int code ); // CREATES A NEW NODE
 List* START(); // INITIALIZES THE LIST
 BOOL EMPTY( List * pList ); // CHECKS IF LIST`S EMPTY
 void PRINT( Node ** head ); // PRINTS EACH NODE FROM THE LIST
+void CLEAR( List * pList );
 
 int main() {
     List *pL = START();
@@ -40,6 +41,8 @@ int main() {
 
     printf("\n+---+\n\n");
     PRINT( &pL->head );
+
+    CLEAR( pL );
 
     return 0;
 }
@@ -104,7 +107,7 @@ Node *newNode( int code ) {
 }
 
 List* START() {
-    List* pList = ( List * )malloc( sizeof( List ) );    
+    List* pList = ( List * )malloc( sizeof( List ) ); 
     pList->size = 0;
     pList->head = NULL;
 
@@ -125,5 +128,16 @@ void PRINT( Node ** head ) {
         printf(" %d \n", (*tracer)->code);
         tracer = &(*tracer)->next;
     } 
+}
 
+void CLEAR( List *pList ) {
+    Node * tracer = pList->head;
+
+    while ( pList->head ) {
+        pList->head = pList->head->next;
+        free( tracer );
+        tracer = pList->head;
+    }
+
+    free( pList );
 }
