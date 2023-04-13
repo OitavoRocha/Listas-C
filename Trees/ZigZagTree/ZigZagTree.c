@@ -5,6 +5,9 @@ tem q terminar isso aq ainda
 #include <stdio.h>
 #include <stdlib.h>
 
+#define LeftRight 0
+#define RightLeft 1
+
 struct _node {
     int data;
     struct _node * pLeft;
@@ -17,6 +20,8 @@ Node insertNode( Node root, int value );
 Node removeNode( Node root, int value );
 void predecessor( Node root, Node * r );
 int height( Node root );
+int count( Node root );
+int changeDirection( int flag );
 void zigZagPrint( Node root );
 
 void preOrder( Node root ) {
@@ -27,7 +32,6 @@ void preOrder( Node root ) {
     preOrder( root->pRight );
 }
 
-
 int main() {
     Node root = create( 40 );
     
@@ -36,8 +40,9 @@ int main() {
     root = insertNode( root, 45 );
     root = insertNode( root, 48 );
 
+    printf(" height: %d", height( root ));
     printf("\n");
-    preOrder( root );
+    zigZagPrint( root );
     printf("\n");
 
 
@@ -60,11 +65,12 @@ Node insertNode( Node root, int value ) {
         return root;
     }
 
-    if ( value < root->data )
+    if ( value < root->data ) {
         root->pLeft = insertNode( root->pLeft, value );
-    else
+    } else {
         root->pRight = insertNode( root->pRight, value );
-    
+    }
+
     return root;
 }
 
@@ -118,11 +124,47 @@ void predecessor(Node root, Node * r ) {
     free( aux );
 }
 
+int height( Node root ) {
+    if ( root == NULL ) 
+        return 0;
+
+    int hR, hL;
+
+    hR = height( root->pRight );
+    hL = height( root->pLeft );
+
+    if ( hR > hL )
+        return hR + 1;
+
+    return hL + 1; 
+}
+
+int count( Node root ) {
+    if( root == NULL )
+        return 0;
+
+    return 1 + count( root->pLeft ) + count( root->pRight );
+}
+
+int changeDirection( int flag ) {
+    return !flag;
+}
+
 void zigZagPrint( Node root ) {
-    Node aux;
-    int h = height( root );
-    
-    for( int i = 0 ; i < h ; i++ ) {
-        ;
+    Node aux = root;
+    int * vector = (int *)malloc( count( root ) * sizeof( int ) );
+    int size = count( root );
+    int flag = LeftRight;
+
+    if ( size == 0 ) {
+        return;
     }
+    
+    for( int i = 0 ; i < size ; i++ ) {
+        if ( LeftRight ) 
+            vector[i] = aux->data;
+        else
+            vector[i] = aux->data;
+    }
+    
 }
