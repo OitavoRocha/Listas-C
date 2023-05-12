@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <time.h>
 
 void quickSort( int nums[], int left, int right ) {
@@ -36,23 +37,23 @@ void quickSort( int nums[], int left, int right ) {
 int main() {
     int n;
     int * nums;
-    srand(time(NULL));
+    clock_t t;
+    srand(time(NULL) ^ (intptr_t)&main);
 
-    printf("Informe n: ");
+    printf("Number of elements in the array: ");
     scanf("%d", &n);
+
     nums = (int *)malloc( sizeof(int) * n );
 
-    printf("Vetor:\n");
     for( int i = 0 ; i<n ; i++ ) {
-        nums[i] = rand() % 100;
-        printf("%d ", nums[i]);
+        nums[i] = rand() % 500;
     }
 
+    t = clock();
     quickSort( nums, 0, n-1 );
+    t = clock() - t;
 
-    printf("\nVetor Ordenado:\n");
-    for( int i = 0 ; i<n ; i++ )
-        printf("%d ", nums[i]);
-
+    printf("Execution Time: %.5fs\n", ((double)t)/CLOCKS_PER_SEC);
+    free( nums );
     return 0;
 }

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <time.h>
 
 void sort( int nums[], int left, int right );
@@ -8,7 +9,7 @@ void merge( int nums[], int left, int mid, int right );
 int main() {
     int n;
     int * nums;
-    srand(time(NULL));
+/*    srand(time(NULL));
 
     printf("Informe n: ");
     scanf("%d", &n);
@@ -25,7 +26,26 @@ int main() {
     printf("\nVetor Ordenado:\n");
     for( int i = 0 ; i<n ; i++ )
         printf("%d ", nums[i]);
+*/
 
+    clock_t t;
+    srand(time(NULL) ^ (intptr_t)&main);
+
+    printf("Number of elements in the array: ");
+    scanf("%d", &n);
+
+    nums = (int *)malloc( sizeof(int) * n );
+
+    for( int i = 0 ; i<n ; i++ ) {
+        nums[i] = rand() % 500;
+    }
+
+    t = clock();
+    sort( nums, 0, n-1 );
+    t = clock() - t;
+
+    printf("Execution Time: %.5fs\n", ((double)t)/CLOCKS_PER_SEC);
+    free( nums );
     return 0;
 }
 
